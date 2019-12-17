@@ -2,14 +2,14 @@
 #include <stdlib.h>
 #include<string.h>
 char contlastname[25];
-int numberofcontacts,newnumberofcontacts,m,z;
+int choice,numberofcontacts,newnumberofcontacts,m,z;
 struct date
 {
     int day;
     int month;
     int year;
 };
-int choice;
+
 struct contact
 {
     char Fname[25],
@@ -20,14 +20,16 @@ struct contact
     struct date bd;
 };
 struct contact cont[100];
+
 void deletecontact()
-{    int noofrpt=0;
+{
+    int noofrpt=0;
     char contfirstname[25];
     printf("Enter the first name of the contact you want to delete:");
     scanf("%s",&contfirstname);
     printf("Enter the last name of the contact you want to delete:");
     scanf("%s",&contlastname);
-for(m=0; m<newnumberofcontacts; m++)
+    for(m=0; m<newnumberofcontacts; m++)
     {
         if(strcasecmp(contlastname,cont[m].Lname)==0&&strcasecmp(contfirstname,cont[m].Fname)==0)
         {
@@ -60,15 +62,16 @@ for(m=0; m<newnumberofcontacts; m++)
     printf("Contact deleted successfully!");
 }
 int search(int x)
-{int noofrpt=0;
+{
+    int noofrpt=0;
     printf("Enter the last name of the contact you want to search for:");
     scanf("%s",&contlastname);
-for(m=0; m<x; m++)
+    for(m=0; m<x; m++)
     {
         if(strcasecmp(contlastname,cont[m].Lname)==0)
         {
             noofrpt++;
-            printf("Contact number (%d):\nFirst name: %s\nLast name: %s\nDay of birth: %d\nMonth of birth: %d\nYear of birth: %d\nEmail: %s\nAddress: %s\nPhone #: %s\n=================================================================\n",m+1,cont[m].Fname,cont[m].Lname,cont[m].bd.day,cont[m].bd.month,cont[m].bd.year,cont[m].email,cont[m].address,cont[m].PHno);
+            printf("Contact number (%d):\nFirst name: %s\nLast name: %s\nPhone #: %s\nDay of birth: %d\nMonth of birth: %d\nYear of birth: %d\nEmail: %s\nAddress: %s\n========================================================0=========\n",m+1,cont[m].Fname,cont[m].Lname,cont[m].PHno,cont[m].bd.month,cont[m].bd.year,cont[m].email,cont[m].address,cont[m].bd.day);
             z=m;
         }
     }
@@ -79,7 +82,8 @@ for(m=0; m<x; m++)
     return noofrpt;
 }
 int load()
-{    int i=0;
+{
+    int i=0;
     FILE *phonebook =fopen("/Users/xxxom/Desktop/Term3Project/phonebook.txt","r");
     if(phonebook!=NULL)
     {
@@ -98,7 +102,7 @@ int load()
             fscanf (phonebook, "%[^,],",&cont[i].email);
             fscanf (phonebook, "%s\n",&cont[i].PHno);
             i++;
-}
+        }
         printf ("# of Contacts saved= %d\n", i);
     }
     else
@@ -127,9 +131,11 @@ void addcontact()
     scanf (" %[^\n]s",&cont[newnumberofcontacts].address);
     printf("Enter phone #:");
     scanf("%s",&cont[newnumberofcontacts].PHno);
-    printf("\n\tContact added!\n \tPress 6 to save.\n");}
+    printf("\n\tContact added!\n \tPress 6 to save.\n");
+}
 void modifycontact(int x)
-{    int y = search(x);
+{
+    int y = search(x);
     if(y!=0)
     {
         if(y>1)
@@ -214,6 +220,99 @@ void savecontact()
     printf ("All changes have been saved\n");
     fclose (phonebook);
 }
+void printcontacts()
+{
+    do
+    {
+        printf("Ho do you want to sort the contacts?\n1-Last name\t2-Date of birth:");
+        scanf("%d",&choice);
+    }
+    while(choice!=1&&choice!=2);
+    if(choice==1)
+    {
+        printf("Sorting by last name...\n");
+        sortbylname();
+    }
+    else
+    {
+        printf("Sorting by date of birth...\n");
+        sortbydob();
+    }
+    for(m=0; m<newnumberofcontacts; m++)
+    {
+        printf("Contact #%d:-\n",m+1);
+        printf("First name: %s\n",cont[m].Fname);
+        printf("Last name: %s\n",cont[m].Lname);
+        printf("Phone number: %s\n",cont[m].PHno);
+        printf("Date of birth: %d/%d/%d\n",cont[m].bd.day,cont[m].bd.month,cont[m].bd.year);
+        printf("E-mail: %s\n",cont[m].email);
+        printf("Address: %s\n===================================================\n",cont[m].address);
+
+
+    }
+}
+void sortbylname()
+{
+    struct contact temp;
+    for (m = 0; m < newnumberofcontacts-1; m++)
+    {
+
+
+        for (z = 0; z < newnumberofcontacts-m-1; z++)
+        {
+
+            if (strcasecmp(cont[z].Lname,cont[z+1].Lname)>0)
+            {
+                temp=cont[z];
+                cont[z]=cont[z+1];
+                cont[z+1]=temp;
+
+            }
+
+        }
+    }
+}
+void sortbydob()
+{
+    struct contact temp;
+    for (m = 0; m < newnumberofcontacts-1; m++)
+    {
+
+
+        for (z = 0; z < newnumberofcontacts-m-1; z++)
+        {
+
+            if (cont[z].bd.year > cont[z+1].bd.year)
+            {
+                temp=cont[z];
+                cont[z]=cont[z+1];
+                cont[z+1]=temp;
+
+            }
+            else if(cont[z].bd.year == cont[z+1].bd.year)
+            {
+                if(cont[z].bd.month > cont[z+1].bd.month)
+                {
+                    temp=cont[z];
+                    cont[z]=cont[z+1];
+                    cont[z+1]=temp;
+                }
+                else if(cont[z].bd.month == cont[z+1].bd.month)
+                {
+                    if(cont[z].bd.day > cont[z+1].bd.day)
+                    {
+                        temp=cont[z];
+                        cont[z]=cont[z+1];
+                        cont[z+1]=temp;
+
+                    }
+
+                }
+
+            }
+        }
+    }
+}
 int main()
 {
     numberofcontacts=load();
@@ -242,12 +341,12 @@ int main()
             modifycontact(newnumberofcontacts);
             break;
         case 5:
-            printf("Printing...\n");
-break;
+            printcontacts();
+            break;
         case 6:
             printf("Saving...\n");
             savecontact();
-break;
+            break;
         case 7:
             do
             {
