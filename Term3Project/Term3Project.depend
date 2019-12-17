@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1576598792 source:c:\users\xxxom\desktop\term3project\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
