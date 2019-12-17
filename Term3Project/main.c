@@ -71,7 +71,13 @@ int search(int x)
         if(strcasecmp(contlastname,cont[m].Lname)==0)
         {
             noofrpt++;
-            printf("Contact number (%d):\nFirst name: %s\nLast name: %s\nPhone #: %s\nDay of birth: %d\nMonth of birth: %d\nYear of birth: %d\nEmail: %s\nAddress: %s\n========================================================0=========\n",m+1,cont[m].Fname,cont[m].Lname,cont[m].PHno,cont[m].bd.month,cont[m].bd.year,cont[m].email,cont[m].address,cont[m].bd.day);
+            printf("Contact #%d:-\n",m+1);
+            printf("First name: %s\n",cont[m].Fname);
+            printf("Last name: %s\n",cont[m].Lname);
+            printf("Phone number: %s\n",cont[m].PHno);
+            printf("Date of birth: %d/%d/%d\n",cont[m].bd.day,cont[m].bd.month,cont[m].bd.year);
+            printf("E-mail: %s\n",cont[m].email);
+            printf("Address: %s\n===================================================\n",cont[m].address);
             z=m;
         }
     }
@@ -144,57 +150,111 @@ void modifycontact(int x)
             scanf("%d",&z);
             z--;
         }
-        printf("\nFirst name..\n1-Modify)\n2-Skip:");
-        scanf("%d",&choice);
+        do
+        {
+            printf("\nFirst name..\n1-Modify\n2-Skip:");
+            scanf("%d",&choice);
+            if(choice!=1&&choice!=2)
+                printf("ERROR! Wrong Entry.\n");
+        }
+        while(choice!=1&&choice!=2);
         if(choice==1)
         {
             printf("Enter new first name: ");
             scanf("%s",&cont[z].Fname);
         }
-        printf("\nLast name..\n1-Modify\n2-Skip:");
-        scanf("%d",&choice);
+
+        do
+        {
+            printf("\nLast name..\n1-Modify\n2-Skip:");
+            scanf("%d",&choice);
+            if(choice!=1&&choice!=2)
+                printf("ERROR! Wrong Entry.\n");
+        }
+        while(choice!=1&&choice!=2);
         if(choice==1)
         {
             printf("Enter new last name: ");
             scanf("%s",&cont[z].Lname);
         }
-        printf("\nDay of birth..\n1-Modify\n2-Skip:");
-        scanf("%d",&choice);
+        do
+        {
+            printf("\nDay of birth..\n1-Modify\n2-Skip:");
+            scanf("%d",&choice);
+            if(choice!=1&&choice!=2)
+                printf("ERROR! Wrong Entry.\n");
+        }
+
+        while(choice!=1&&choice!=2);
         if(choice==1)
         {
             printf("Enter new day of birth:");
             scanf("%d",&cont[z].bd.day);
         }
-        printf("\nMonth of birth..\n1-Modify\n2-Skip:");
-        scanf("%d",&choice);
+        do
+        {
+            printf("\nMonth of birth..\n1-Modify\n2-Skip:");
+            scanf("%d",&choice);
+            if(choice!=1&&choice!=2)
+                printf("ERROR! Wrong Entry.\n");
+        }
+
+        while(choice!=1&&choice!=2);
         if(choice==1)
         {
             printf("Enter new month of birth:");
             scanf("%d",&cont[z].bd.month);
         }
-        printf("\nYear of birth..\n1-Modify\n2-Skip:");
-        scanf("%d",&choice);
+        do
+        {
+            printf("\nYear of birth..\n1-Modify\n2-Skip:");
+            scanf("%d",&choice);
+            if(choice!=1&&choice!=2)
+                printf("ERROR! Wrong Entry.\n");
+
+        }
+        while(choice!=1&&choice!=2);
         if(choice==1)
         {
             printf("Enter new year of birth: ");
             scanf("%d",&cont[z].bd.year);
         }
-        printf("\nEmail..\n1-Modify\n2-Skip:");
-        scanf("%d",&choice);
+        do
+        {
+            printf("\nEmail..\n1-Modify\n2-Skip:");
+            scanf("%d",&choice);
+            if(choice!=1&&choice!=2)
+                printf("ERROR! Wrong Entry.\n");
+        }
+        while(choice!=1&&choice!=2);
         if(choice==1)
         {
             printf("Enter new email: ");
             scanf("%s",&cont[z].email);
         }
-        printf("\nAddress..\n1-Modify\n2-Skip;");
-        scanf("%d",&choice);
+        do
+        {
+            printf("\nAddress..\n1-Modify\n2-Skip;");
+            scanf("%d",&choice);
+            if(choice!=1&&choice!=2)
+                printf("ERROR! Wrong Entry.\n");
+
+        }
+        while(choice!=1&&choice!=2);
         if(choice==1)
         {
             printf("Enter new address: ");
             scanf("%s",cont[z].address);
         }
-        printf("\nPhone Number..\n1-Modify\n2-Skip:");
-        scanf("%d",&choice);
+        do
+        {
+            printf("\nPhone Number..\n1-Modify\n2-Skip:");
+            scanf("%d",&choice);
+            if(choice!=1&&choice!=2)
+                printf("ERROR! Wrong Entry.\n");
+
+        }
+        while(choice!=1&&choice!=2);
         if(choice==1)
         {
             printf("Enter new phone no.: ");
@@ -358,7 +418,7 @@ int main()
                     break;
                 else
                 {
-                    printf("ERROR! Wrong Choice.\n");
+                    printf("ERROR! Wrong Entry.\n");
                 }
             }
             while(choice!=1&&choice!=2);
