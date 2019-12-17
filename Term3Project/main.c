@@ -125,19 +125,37 @@ void deletecontact()
     }
     if(noofrpt==0)
         printf("No contact with this name is found");
-    for(int i=m; i<=newnumberofcontacts; i++)
+    if(noofrpt)
     {
-        strcpy( cont[i].Fname,cont[i+1].Fname);
-        strcpy(cont[i].Lname,cont[i+1].Lname);
-        cont[i].bd.day=cont[i+1].bd.day;
-        cont[i].bd.month=cont[i+1].bd.month;
-        cont[i].bd.year=cont[i+1].bd.year;
-        strcpy(cont[i].email,cont[i+1].email);
-        strcpy(cont[i].address,cont[i+1].address);
-        strcpy(cont[i].PHno,cont[i+1].PHno);
+        do
+        {
+            printf("\nAre you sure you want to delete?\n1-Yes\n2-No:");
+            scanf("%d",&choice);
+            if(choice!=1&&choice!=2)
+                printf("ERROR! Wrong Entry.\n");
+        }
+        while(choice!=1&&choice!=2);
     }
-    newnumberofcontacts--;
-    if(noofrpt)printf("Contact deleted successfully!\n Press 6 to save.");
+
+    if(choice==1)
+    {
+        for(int i=m; i<=newnumberofcontacts; i++)
+        {
+            strcpy( cont[i].Fname,cont[i+1].Fname);
+            strcpy(cont[i].Lname,cont[i+1].Lname);
+            cont[i].bd.day=cont[i+1].bd.day;
+            cont[i].bd.month=cont[i+1].bd.month;
+            cont[i].bd.year=cont[i+1].bd.year;
+            strcpy(cont[i].email,cont[i+1].email);
+            strcpy(cont[i].address,cont[i+1].address);
+            strcpy(cont[i].PHno,cont[i+1].PHno);
+        }
+        newnumberofcontacts--;
+        if(noofrpt)
+            printf("Contact deleted successfully!\n Press 6 to save.");
+    }
+    else if(choice==2)
+        printf("\nContact not deleted.");
 }
 
 void modifycontact(int x)
@@ -261,15 +279,16 @@ void modifycontact(int x)
             printf("Enter new phone no.: ");
             scanf("%s",cont[z].PHno);
         }
+        printf("Contact number (%d) after modification:\nfirst name: %s\n",m+1,cont[z].Fname);
+        printf("last name: %s\n",cont[z].Lname);
+        printf("day of birth: %d\n",cont[z].bd.day);
+        printf("month of birth: %d\n",cont[z].bd.month);
+        printf("year of birth: %d\n",cont[z].bd.year);
+        printf("email: %s\n",cont[z].email);
+        printf("address: %s\n",cont[z].address);
+        printf("phone #: %s\n\nContact modified successfully!\nPress 6 to save.",cont[z].PHno);
     }
-      printf("Contact number (%d) after modification:\nfirst name: %s\n",m+1,cont[z].Fname);
-            printf("last name: %s\n",cont[z].Lname);
-            printf("day of birth: %d\n",cont[z].bd.day);
-            printf("month of birth: %d\n",cont[z].bd.month);
-            printf("year of birth: %d\n",cont[z].bd.year);
-            printf("email: %s\n",cont[z].email);
-            printf("address: %s\n",cont[z].address);
-            printf("phone #: %s\n\nContact modified successfully!\nPress 6 to save.",cont[z].PHno);
+
 }
 void savecontact()
 {
