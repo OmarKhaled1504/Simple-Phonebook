@@ -24,7 +24,7 @@ struct contact cont[100];
 int load()
 {
     int i=0;
-    FILE *phonebook = fopen("/Users/xxxom/Desktop/Term3Project/phonebook.txt","r");
+    FILE *phonebook = fopen("phonebook.txt","r");
     if(phonebook!=NULL)
     {
         while(!feof(phonebook))
@@ -354,7 +354,7 @@ void modifycontact(int x)
 void savecontact()
 {
     int i;
-    FILE *phonebook =fopen("/Users/xxxom/Desktop/Term3Project/phonebook.txt","w");
+    FILE *phonebook =fopen("phonebook.txt","w");
     for(i=0; i<newnumberofcontacts; i++)
     {
 
