@@ -29,12 +29,13 @@ int load()
     {
         while(!feof(phonebook))
         {
-            fscanf (phonebook, "%[^,],",&cont[i].Fname);
+            fscanf (phonebook, "%[^,],",&cont[i].Lname);
             if(feof(phonebook))
             {
                 break;
             }
-            fscanf (phonebook, "%[^,],",&cont[i].Lname);
+            fscanf (phonebook, "%[^,],",&cont[i].Fname);
+
             fscanf (phonebook, "%d-",&cont[i].bd.day);
             fscanf (phonebook, "%d-",&cont[i].bd.month);
             fscanf (phonebook, "%d,",&cont[i].bd.year);
@@ -111,12 +112,10 @@ void addcontact()
         scanf("%s",&cont[newnumberofcontacts].email);
     }
     while (!ValidEmail(cont[newnumberofcontacts].email));
-    do
-    {
-        printf("Enter Address:");
-        scanf (" %[^\n]s",&cont[newnumberofcontacts].address);
-    }
-    while (!ValidAddress(cont[newnumberofcontacts].address));
+
+    printf("Enter Address:");
+    scanf (" %[^\n]s",&cont[newnumberofcontacts].address);
+
     do
     {
         printf("Enter Phone #:");
@@ -318,12 +317,11 @@ void modifycontact(int x)
         while(choice!=1&&choice!=2);
         if(choice==1)
         {
-            do
-            {
-                printf("Enter new Adress:");
-                scanf (" %s",&cont[z].address);
-            }
-            while (!ValidAddress(cont[z].address));
+
+            printf("Enter new Address:");
+            scanf (" %s",&cont[z].address);
+
+
         }
         do
         {
@@ -359,8 +357,9 @@ void savecontact()
     FILE *phonebook =fopen("/Users/xxxom/Desktop/Term3Project/phonebook.txt","w");
     for(i=0; i<newnumberofcontacts; i++)
     {
-        fprintf (phonebook, "%s,", cont[i].Fname);
+
         fprintf (phonebook, "%s,", cont[i].Lname);
+        fprintf (phonebook, "%s,", cont[i].Fname);
         fprintf (phonebook, "%d-", cont[i].bd.day);
         fprintf (phonebook, "%d-", cont[i].bd.month);
         fprintf (phonebook, "%d,", cont[i].bd.year);
@@ -376,7 +375,7 @@ void printcontacts()
 {
     do
     {
-        printf("How do you want to sort the contacts?\n1-Last name\t2-Date of birth:");
+        printf("How do you want to sort the contacts?\n1-Last name\t2-Date of birth:\n");
         scanf("%d",&choice);
         if(choice!=1&&choice!=2)
             printf("ERROR! Wrong Entry.\n");
@@ -423,6 +422,19 @@ void sortbylname()
 
             }
 
+
+
+            else if(strcasecmp(cont[z].Lname,cont[z+1].Lname)==0)
+            {
+                if (strcasecmp(cont[z].Fname,cont[z+1].Fname)>0)
+                {
+                    temp=cont[z];
+                    cont[z]=cont[z+1];
+                    cont[z+1]=temp;
+
+                }
+
+            }
         }
     }
 }
@@ -543,7 +555,7 @@ int ValidPhoneNum(char *phonenumber)
 int ValidEmail(char *email)
 {
     int i,j,found=0;
-    char postat[4];
+    char postdot[4];
     int len=strlen(email);
     if ((isalpha(email[0]))||(isdigit(email[0]))&&email[len-4]=='.')
     {
@@ -553,10 +565,10 @@ int ValidEmail(char *email)
             {
                 for(i=len-3,j=0; i<len; i++,j++)
                 {
-                    postat[j]=email[i];
+                    postdot[j]=email[i];
                 }
-                postat[3]='\0';
-                if (strcmp(postat,"com")==0||strcmp(postat,"net")==0||strcmp(postat,"org")==0||strcmp(postat,"edu") == 0)
+                postdot[3]='\0';
+                if (strcmp(postdot,"com")==0||strcmp(postdot,"net")==0||strcmp(postdot,"org")==0||strcmp(postdot,"edu") == 0)
                     found=1;
             }
         }
@@ -575,20 +587,3 @@ int ValidEmail(char *email)
     }
 }
 
-int ValidAddress(char *address)
-{
-    int i, flag =0;
-    for (i =0; i<strlen(address); i++)
-    {
-        if (!(isalpha (address[i]))&&!(isdigit (address[i])))
-            flag = 1;
-
-        if (flag == 1)
-        {
-            printf ("Invalid entry. Please enter a valid address!\n");
-            return 0;
-        }
-        else
-            return 1;
-    }
-}
